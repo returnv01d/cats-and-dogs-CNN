@@ -91,10 +91,14 @@
 ### Sieci neuronowe
 - Składniki sieci neuronowych (neuron, połączenia, warstwy, funkcja aktywacji, wejścia i wyjścia)
 - Rodzaje (jednokierunkowa, rekurencyjna, konwolucyjna, LSTM)
+- Uczenie (ewaluacja, propagacja wsteczna albo inne algorytmy np genetyczne/ewolucyjne)
 ## Praktyka (ile czasu?)
 ### Zaprezentowanie tworzenia prostej sieci neuronowej z wykorzystaniem najpopularniejszych narzędzi ( + omówienie pozostałych)
+### Zaprezentowanie vowpal wabbit - stworzenie modelu
 ### Zaprezentowanie gotowych narzędzi AI
 - przykłady z dobrymi i złymi promptami, czyli AI nie jest idealne
+- artefakty w generowanych przez AI obrazkach (thispersondoesnotexist, rysowanie rąk i tekstu {instrukcja mycia rąk}, inne szczegóły)
+- 
 
 ### Wykorzystanie powyższych narzędzi przez uczniów
 ## Podsumowanie warsztatów (1h)
