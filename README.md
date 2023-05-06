@@ -19,6 +19,7 @@
  - Złożone pojęcie świadomości
 ### Czym jest sztuczna inteligencja?
  - Definicja
+ - Algorytm do przeszukiwania przestrzeni algorytmów
  - Problem chińskiego pokoju
  - Test Turinga
  - Odwrotny test Turiga
@@ -58,17 +59,44 @@
 - NPC w grach
 - medycyna (roboty operacyjne, wstępna diagnoza i propozycje leczenia)
 - robotyka (Boston Dynamics Atlas oraz Spot)
+### Zagadnienia etyczne 
+#### Zagrożenia
+- Zmiana rynku pracy (niektóre zawody zostaną zamknięte/nieopłacalne)
+- Prawa autorskie do danych użytych do trenowania sztucznej inteligencji
+- Inwigilacja (system oceny społecznej)
+- Algokracja (tworzenie baniek informacyjnych/polaryzacja opinii, cenzura) (https://en.wikipedia.org/wiki/Government_by_algorithm)
+- Niekompletność/regionalizacja/skrzywienie danych uczących
+- Użycie miltarne
+- Rozleniwienie człowieka
+### Zalety
+- Powstanie nowych zawodów (prompt engineering?)
+- Wyręczenie człowieka w pracy, przez co będzie mógł się bardziej skupić na wartościowszych zadaniach (przykłady typu copilot)
+- Umożliwienie tworzenia treści bez znajomości dziedziny (tworzenie opisów produktów, grafik dla programistów gier i stron internetowych - midjourney)
+- Pomoc w podjemowaniu decyzji
+- Podejmowanie ryzyka w zamian za ludzi (robotyka, boston dynamics, poszukianie ofiar katastrof, praca w niekorzystnym środowisku)
+### Historia rozwoju sztucznej inteligencji + trendy
+---
+## Część techniczna 
+---
 ### Sztuczna inteligencja a uczenie maszynowe
 - definicja - uczenie maszynowe jako element sztucznej inteligencji
+- dataset jest ważny - oczyszczanie danych, dane do uczenia i dane do weryfikacji treningu sieci
 - uczenie maszynowe kontra drzewa behawioralne
 - algorytmy genetyczne
 - algorytmach ewolucyjnych
-## Przerwa (40m)
- - migracja między salami
- - rozprostowanie nóg
- - sprawdzenie sprzętu
+### Techniki uczenia maszynowego
+- nadzorowane/nienadzorowane 
+- pojęcia matematyczne
+	- metody statystyczne (gradient, regresja liniowa, bayes)
+### Sieci neuronowe
+- Składniki sieci neuronowych (neuron, połączenia, warstwy, funkcja aktywacji, wejścia i wyjścia)
+- Rodzaje (jednokierunkowa, rekurencyjna, konwolucyjna, LSTM)
 ## Praktyka (ile czasu?)
-### Prezentacja i użycie przez uczniów dostępnych w internecie narzędzi AI związanych z tematami omówionymi w części teoretycznej
+### Zaprezentowanie tworzenia prostej sieci neuronowej z wykorzystaniem najpopularniejszych narzędzi ( + omówienie pozostałych)
+### Zaprezentowanie gotowych narzędzi AI
+- przykłady z dobrymi i złymi promptami, czyli AI nie jest idealne
+
+### Wykorzystanie powyższych narzędzi przez uczniów
 ## Podsumowanie warsztatów (1h)
  - Q&A
  - Przegląd memów
