@@ -92,6 +92,7 @@
 - Składniki sieci neuronowych (neuron, połączenia, warstwy, funkcja aktywacji, wejścia i wyjścia)
 - Rodzaje (jednokierunkowa, rekurencyjna, konwolucyjna, LSTM)
 - Uczenie (ewaluacja, propagacja wsteczna albo inne algorytmy np genetyczne/ewolucyjne)
+- Błędy popełniane w procesie uczenia (overfitting i underfitting)
 ## Praktyka (ile czasu?)
 ### Zaprezentowanie tworzenia prostej sieci neuronowej z wykorzystaniem najpopularniejszych narzędzi ( + omówienie pozostałych)
 ### Zaprezentowanie vowpal wabbit - stworzenie modelu
