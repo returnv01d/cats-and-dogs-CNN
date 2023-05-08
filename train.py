@@ -3,12 +3,13 @@ import os
 import math
 import tensorflow as tf
 
-
+# Use CPU instead of GPU (GPU needs CUDA)
 with tf.device('/cpu:0'):
-
+    # Load all images and rescale them to one size
     train_imagedatagenerator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1/255.0)
     validation_imagedatagenerator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1/255.0)
 
+    # Make data as generator and split it to batches
     train_iterator = train_imagedatagenerator.flow_from_directory(
         './input_for_model/train',
         target_size=(150, 150),
@@ -21,7 +22,6 @@ with tf.device('/cpu:0'):
         batch_size=50,
         class_mode='binary')
 
-    print(len(validation_iterator))
     model = tf.keras.Sequential([
         # Conv2D + MaxPool2D - convolutional layer
         # We split the model into three major parts. First, there are three combinations of the Conv2D and MaxPool2D layers.
@@ -43,10 +43,12 @@ with tf.device('/cpu:0'):
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     model.summary()
 
+    # Make dir and callback for tensorboard logging data.
     log_dir = "logs/fit/" + datetime.now().strftime("%Y%m%d-%H%M%S")
     os.makedirs(f"{log_dir}", exist_ok=True)
     tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
+    # Training network.
     history = model.fit(train_iterator,
                         validation_data=validation_iterator,
                         steps_per_epoch=100,
