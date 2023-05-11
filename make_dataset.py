@@ -34,9 +34,9 @@ def distribute_train_validation_split(validation_size_ratio=0.2):
     copy_images_to_dir(training_dogs, './input_for_model/train/dogs')
     print("copying dogs validation dataset")
     copy_images_to_dir(validation_dogs, './input_for_model/validation/dogs')
-    print("copying dogs train dataset")
+    print("copying cats train dataset")
     copy_images_to_dir(training_cats, './input_for_model/train/cats')
-    print("copying dogs validation dataset")
+    print("copying cats validation dataset")
     copy_images_to_dir(validation_cats, './input_for_model/validation/cats')
 
 def copy_images_to_dir(images_to_copy, destination):

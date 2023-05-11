@@ -46,12 +46,15 @@ with tf.device('/cpu:0'):
     # Make dir and callback for tensorboard logging data.
     log_dir = "logs/fit/" + datetime.now().strftime("%Y%m%d-%H%M%S")
     os.makedirs(f"{log_dir}", exist_ok=True)
-    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1, embeddings_freq=1)
 
     # Training network.
     history = model.fit(train_iterator,
                         validation_data=validation_iterator,
-                        steps_per_epoch=100,
-                        epochs=5,
-                        validation_steps=100,
+                        steps_per_epoch=2,
+                        epochs=1,
+                        validation_steps=2,
                         callbacks=[tensorboard_callback])
+
+    os.makedirs("saved_model", exist_ok=True)
+    model.save('saved_model/cat_and_dogs_classifier', overwrite=True)
