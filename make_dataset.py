@@ -1,10 +1,10 @@
 import os
 import shutil
 import random
+import utils
 
 MODEL_TRAIN_DIR = "input_for_model/"
 def distribute_train_validation_split(validation_size_ratio=0.2):
-
     print("loading images form kaggle...")
     all_images = os.listdir('kaggle/train/')
     print("shuffling images...")
@@ -37,16 +37,13 @@ def distribute_train_validation_split(validation_size_ratio=0.2):
 
     print("copying and splitting data...")
     print("copying dogs train dataset")
-    copy_images_to_dir(training_dogs, './input_for_model/train/dogs')
+    utils.copy_images_to_dir(training_dogs, './input_for_model/train/dogs')
     print("copying dogs validation dataset")
-    copy_images_to_dir(validation_dogs, './input_for_model/validation/dogs')
+    utils.copy_images_to_dir(validation_dogs, './input_for_model/validation/dogs')
     print("copying cats train dataset")
-    copy_images_to_dir(training_cats, './input_for_model/train/cats')
+    utils.copy_images_to_dir(training_cats, './input_for_model/train/cats')
     print("copying cats validation dataset")
-    copy_images_to_dir(validation_cats, './input_for_model/validation/cats')
+    utils.copy_images_to_dir(validation_cats, './input_for_model/validation/cats')
 
-def copy_images_to_dir(images_to_copy, destination):
-    for image in images_to_copy:
-        shutil.copyfile(f'kaggle/train/{image}', f'{destination}/{image}')
 
 distribute_train_validation_split(0.2)

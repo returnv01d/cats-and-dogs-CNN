@@ -4,7 +4,7 @@ This code consists of three parts - generating dataset, training model, and maki
 
 Tools used: python 3.11, tensorflow 2.12 used without GPU.
 ### How to set tensorflow?
-`pip install tensorflow pillow` to install packages should be enough.
+`pip install tensorflow pillow cv2 wget` to install packages should be enough.
 
 ### Generating dataset
 The dataset is taken from [kaggle](kaggle.com/competitions/dogs-vs-cats-redux-kernels-edition) and files are already downloaded and unzipped in kaggle folder (this is why this repo is so big).
@@ -14,14 +14,14 @@ It removes old structure every run and also shuffles structure, so everytime we 
 Just run `make_dataset.py` to lift off all this things up and you are done :rocket:
 
 ### Training network
-After running makedataset.py you can run train.py, but be careful - close the browser and other big programs as it needs RAM.
+After running `make_dataset.py` you can run `train.py`, but be careful - close the browser and other big programs as it needs RAM.
 It can also be running for a long time as we train it 100x times on our data.
-You can tweak up ram usage and training speed byL
+You can tweak up ram usage and training speed by:
 - reducing dataset size (there are 25k images, you can try on 2k but it will be less accurate)
 - reducing trained images size (they are scaled to 150x150, you can control this with constants.py consts)
 - reducing number of validation/training steps
 - stopping logging data for tensorboard during training - remove `tensor_callback` usage in train.py
-When you run the script, there will be some warnings and errors about CUDA files, and some GPU sensor summary info, but those aren't important for us as we train on CPU.
+When you run the script, there will be some warnings and errors about CUDA files, but those aren't important for us as we train on CPU.
 
 #### Checking and debugging model training process
 After training, if you don't disabled tensorboard_callack, there should be new data in logs/fit/ folder. T
@@ -30,4 +30,5 @@ To see them after training run in terminal `tensorboard --logdir logs/fit --host
 
 
 ### Making predictions
-To get images for predictions, put your images in kaggle/train folder and run `predict.py`
+To get images for predictions, put your images in kaggle/train folder and run `predict.py`. 
+Script will show images with predicted labels, press any key to go to next image.
