@@ -2,6 +2,7 @@ import os
 import shutil
 import random
 
+MODEL_TRAIN_DIR = "input_for_model/"
 def distribute_train_validation_split(validation_size_ratio=0.2):
 
     print("loading images form kaggle...")
@@ -21,8 +22,13 @@ def distribute_train_validation_split(validation_size_ratio=0.2):
     training_cats = all_cats[:index_to_split]
     validation_cats = all_cats[index_to_split:]
 
-    print("deleting old input folder")
-    shutil.rmtree('input_for_model')
+    if os.path.exists(MODEL_TRAIN_DIR):
+        print("deleting old model input folder")
+        shutil.rmtree(MODEL_TRAIN_DIR)
+    else:
+        print("creating model input folder")
+        os.makedirs(MODEL_TRAIN_DIR)
+
     print("making dirs for validation and train datasets...")
     os.makedirs('input_for_model/train/dogs/', exist_ok=True)
     os.makedirs('input_for_model/train/cats/', exist_ok=True)

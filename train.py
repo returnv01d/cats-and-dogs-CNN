@@ -1,24 +1,24 @@
 from datetime import datetime
 import os
-import math
 import tensorflow as tf
+import constants
 
 # Use CPU instead of GPU (GPU needs CUDA)
 with tf.device('/cpu:0'):
     # Load all images and rescale them to one size
-    train_imagedatagenerator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1/255.0)
+    train_imagedatagenerator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1/255.0, rotation_range=40, width_shift_range=0.2, height_shift_range=0.2, shear_range=0.2,zoom_range=0.2, horizontal_flip=True)
     validation_imagedatagenerator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1/255.0)
 
     # Make data as generator and split it to batches
     train_iterator = train_imagedatagenerator.flow_from_directory(
         './input_for_model/train',
-        target_size=(150, 150),
+        target_size=constants.SHAPE,
         batch_size=200,
         class_mode='binary')
 
     validation_iterator = validation_imagedatagenerator.flow_from_directory(
         './input_for_model/validation',
-        target_size=(150, 150),
+        target_size=constants.SHAPE,
         batch_size=50,
         class_mode='binary')
 
@@ -28,7 +28,7 @@ with tf.device('/cpu:0'):
         # These are called convolution layers. A Conv2D layer applies a filter to the original image to amplify certain features of the picture.
         # The MaxPool2D layer reduces the size of the image and reduces the number of needed parameters needed.
         # Reducing the size of the image will increase the speed of training the network.
-        tf.keras.layers.Conv2D(16, (3, 3), activation='relu', input_shape=(150, 150, 3)),
+        tf.keras.layers.Conv2D(16, (3, 3), activation='relu', input_shape=(constants.IMG_WIDTH, constants.IMG_HEIGHT, 3)),
         tf.keras.layers.MaxPool2D((2, 2)),
 
         tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
@@ -37,6 +37,7 @@ with tf.device('/cpu:0'):
         tf.keras.layers.MaxPool2D((2, 2)),
         tf.keras.layers.Flatten(),
         tf.keras.layers.Dense(512, activation='relu'),
+        tf.keras.layers.Dropout(0.2),
         tf.keras.layers.Dense(1, activation='sigmoid')
     ])
 
@@ -51,10 +52,10 @@ with tf.device('/cpu:0'):
     # Training network.
     history = model.fit(train_iterator,
                         validation_data=validation_iterator,
-                        steps_per_epoch=2,
-                        epochs=1,
-                        validation_steps=2,
+                        steps_per_epoch=100,
+                        epochs=10,
+                        validation_steps=50,
                         callbacks=[tensorboard_callback])
 
     os.makedirs("saved_model", exist_ok=True)
-    model.save('saved_model/cat_and_dogs_classifier', overwrite=True)
+    model.save('saved_model/cats_and_dogs_classifier', overwrite=True)
