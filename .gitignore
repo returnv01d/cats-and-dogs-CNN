@@ -1,0 +1,5 @@
+input_for_model/
+saved_model/
+logs/fit/
+__pycache__/
+.idea/
