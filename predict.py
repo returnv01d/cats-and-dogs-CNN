@@ -1,40 +1,68 @@
+import tensorflow as tf
 import numpy as np
 import os
-import tensorflow as tf
-import cv2
-
+import random
 import constants
+import utils
 
-IMG_FOLDER = r'kaggle/test/'
+from tf_keras_vis.utils.model_modifiers import ReplaceToLinear
+from tf_keras_vis.utils.scores import CategoricalScore
+from tf_keras_vis.gradcam_plus_plus import GradcamPlusPlus
+from tf_keras_vis.scorecam import Scorecam
+from tf_keras_vis.saliency import Saliency
+
+from matplotlib import pyplot as plt
+from matplotlib import cm
 
 print("Loading model from disk...")
-model = tf.keras.models.load_model('saved_model/cats_and_dogs_classifier')
+model = tf.keras.models.load_model('saved_model/cat_and_dog_classifier')
+model_copy = tf.keras.models.load_model('saved_model/cat_and_dog_classifier')
 
-for file in os.listdir(IMG_FOLDER):
-    image_path = os.path.join(IMG_FOLDER, file)
-    print(f"Loading {image_path} ...")
 
-    img = tf.keras.preprocessing.image.load_img(image_path, target_size=constants.SHAPE)
+gradcam = GradcamPlusPlus(model_copy, model_modifier=ReplaceToLinear(), clone=False)
+scorecam = Scorecam(model_copy, model_modifier=ReplaceToLinear(), clone=False)
+saliency = Saliency(model_copy, model_modifier=ReplaceToLinear(), clone=False)
 
-    x = tf.keras.preprocessing.image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    images = np.vstack([x])
 
-    prediction = model.predict(images, batch_size=10)
+files = os.listdir(constants.IMG_FOLDER)
+random.shuffle(files)
+for file in files:
+    img_path = os.path.join(constants.IMG_FOLDER, file)
+    X = utils.load_and_preprocess_image(img_path)
 
-    print(prediction[0])
+    raw_predictions = model.predict(X)
+    predicted_category = np.argmax(raw_predictions[0], axis=-1)
 
-    if prediction[0] > 0:
-        print(file + " is a dog")
-        label = "dog"
-    else:
-        print(file + " is a cat")
-        label = "cat"
+    score = CategoricalScore([predicted_category])
+    print(raw_predictions)
 
-    original = cv2.imread(image_path)
+    f, ax = plt.subplots(nrows=1, ncols=4, figsize=(12, 4))
 
-    cv2.putText(original, "Label: {}".format(label), (10, 30),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-    cv2.imshow('', original)
-    cv2.waitKey(0)
+    prediction_info = "Predicted: {} ({})".format(constants.CLASS_INFO[predicted_category], utils.make_prediction_labels(raw_predictions))
+    ax[0].set_title(prediction_info, fontsize=10)
+    ax[0].imshow(X[0])
+    ax[0].axis("off")
 
+    ax[1].set_title("GradCAM++", fontsize=16)
+    cam = gradcam(score, X, penultimate_layer=-1)
+    heatmap = np.uint8(cm.jet(cam[0])[..., :3] * 255)
+    ax[1].imshow(X[0])
+    ax[1].imshow(heatmap, cmap='jet', alpha=0.5)
+    ax[1].axis('off')
+
+    ax[2].set_title("ScoreCAM++", fontsize=16)
+    sccam = scorecam(score, X, penultimate_layer=-1)
+    heatmap = np.uint8(cm.jet(sccam[0])[..., :3] * 255)
+    ax[2].imshow(X[0])
+    ax[2].imshow(heatmap, cmap='jet', alpha=0.5)
+    ax[2].axis('off')
+
+    ax[3].set_title("Saliency map", fontsize=16)
+    saliency_map = saliency(score, X, smooth_samples=20, smooth_noise=0.20)
+    ax[3].imshow(saliency_map[0], cmap='jet')
+    ax[3].axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+    input()
