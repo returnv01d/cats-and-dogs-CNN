@@ -1,107 +1,40 @@
+Code developed to make CNN used to show neural network learning and classifying process for AI workshop for students in my old vocational school.
 
-# ai@grabski
- - Data: 12.05.2023
- - Godzina: 8:00
- - Czas trwania: 7h10m
- - 1 klasa (II Technik programista)
- - 2 części
-    - Teoria
-    - Praktyka
+# Usage of repo
+This is code for training categorical CNN for classifying cats and dogs images, and then predicting images and showing visualizations.
+Code were taken and built from many tutorials.
+This code consists of three parts - generating dataset, training model, and making predictions.
 
-## Teoria (ile czasu?)
-### Czym jest inteligencja?
- - Jakie są składniki/rodzaje inteligencji
- - Teorie inteligencji
-	 - Triarchiczna teoria (Sternberg)
-	 - Inteligencja wieloraka (Gardnera)
-	 - Teoria głównych umiejętności umysłowych (Thurstone)
-	 - Inteligencja ogólna i specyficzne (Spearman)
- - Złożone pojęcie świadomości
-### Czym jest sztuczna inteligencja?
- - Definicja
- - Algorytm do przeszukiwania przestrzeni algorytmów
- - Problem chińskiego pokoju
- - Test Turinga
- - Odwrotny test Turiga
- - The Visual Turing Test
- - Winograd Schema Challenge
- - The Marcus Test
- - The Lovelace Test 2.0
- - The Construction Challenge
-### Rodzaje sztucznej inteligencji (jakie dane przetwarzają)
- - Graficzne
- - Dźwiękowe
- - Tekstowe
-### Rodzaje sztucznej inteligencji (jak te dane przetwarzają)
-- Sieci neuronowe
-- Metody statystyczne (np. regresja)
-### Problemy rozwiązywane przez sztuczną inteligencję
-- Problem klasyfikacji
-	- Binarna (decyzje tak/nie, start/stop, kup/sprzedaj)
-	- Kategoryzacja (rodzaj zwierzęcia/przedmiotu)
-	- Ocena (sentyment)
-- Ekstrapolacja danych (proponowanie kolejnych piosenek, filmów)
-- Interpolacja danych (zwiększanie framerate)
-- Ekstrakcja danych (z PDF, stron WWW)
-- Podsumowanie (wyciąganie danych kluczowych np. streszczenie tekstów)
-- Estymacja (wybór najlepszych/najważniejszych jednostek spośród danych)
-- Wykrywanie błędów/anomalii (analiza gramatyczna, ruchu sieciowego i cyberbezpieczeństwa, stanu kierowcy pojazdu, rozpoznanie czy dane zostały wygenerowane przez AI)
-### Przykłady wykorzystania
-- rozpoznawanie i generacja mowy (OK Google, Siri, Alexa, dynamiczny tłumacz)
-- generowanie feedu (Facebook, Instagram)
-- rekomendacje (Spotify, Youtube)
-- rozpoznawanie istot żywych i przedmiotów (Obiektyw Google)
-- pojazdy autonomiczne (drony, samochody Tesla)
-- AI art (generowanie gotowych grafik lub półproduktów dla grafików)
-- retuszowanie i koloryzacja starych zdjęć/filmów
-- przeciwdziałanie oszustwom (detekcja spamu, podejrzanych transakcji finansowych)
-- predykcje i działania giełdowe
-- NPC w grach
-- medycyna (roboty operacyjne, wstępna diagnoza i propozycje leczenia)
-- robotyka (Boston Dynamics Atlas oraz Spot)
-### Zagadnienia etyczne 
-#### Zagrożenia
-- Zmiana rynku pracy (niektóre zawody zostaną zamknięte/nieopłacalne)
-- Prawa autorskie do danych użytych do trenowania sztucznej inteligencji
-- Inwigilacja (system oceny społecznej)
-- Algokracja (tworzenie baniek informacyjnych/polaryzacja opinii, cenzura) (https://en.wikipedia.org/wiki/Government_by_algorithm)
-- Niekompletność/regionalizacja/skrzywienie danych uczących
-- Użycie miltarne
-- Rozleniwienie człowieka
-### Zalety
-- Powstanie nowych zawodów (prompt engineering?)
-- Wyręczenie człowieka w pracy, przez co będzie mógł się bardziej skupić na wartościowszych zadaniach (przykłady typu copilot)
-- Umożliwienie tworzenia treści bez znajomości dziedziny (tworzenie opisów produktów, grafik dla programistów gier i stron internetowych - midjourney)
-- Pomoc w podjemowaniu decyzji
-- Podejmowanie ryzyka w zamian za ludzi (robotyka, boston dynamics, poszukianie ofiar katastrof, praca w niekorzystnym środowisku)
-### Historia rozwoju sztucznej inteligencji + trendy
----
-## Część techniczna 
----
-### Sztuczna inteligencja a uczenie maszynowe
-- definicja - uczenie maszynowe jako element sztucznej inteligencji
-- dataset jest ważny - oczyszczanie danych, dane do uczenia i dane do weryfikacji treningu sieci
-- uczenie maszynowe kontra drzewa behawioralne
-- algorytmy genetyczne
-- algorytmach ewolucyjnych
-### Techniki uczenia maszynowego
-- nadzorowane/nienadzorowane 
-- pojęcia matematyczne
-	- metody statystyczne (gradient, regresja liniowa, bayes)
-### Sieci neuronowe
-- Składniki sieci neuronowych (neuron, połączenia, warstwy, funkcja aktywacji, wejścia i wyjścia)
-- Rodzaje (jednokierunkowa, rekurencyjna, konwolucyjna, LSTM)
-- Uczenie (ewaluacja, propagacja wsteczna albo inne algorytmy np genetyczne/ewolucyjne)
-- Błędy popełniane w procesie uczenia (overfitting i underfitting)
-## Praktyka (ile czasu?)
-### Zaprezentowanie tworzenia prostej sieci neuronowej z wykorzystaniem najpopularniejszych narzędzi ( + omówienie pozostałych)
-### Zaprezentowanie vowpal wabbit - stworzenie modelu
-### Zaprezentowanie gotowych narzędzi AI
-- przykłady z dobrymi i złymi promptami, czyli AI nie jest idealne
-- artefakty w generowanych przez AI obrazkach (thispersondoesnotexist, rysowanie rąk i tekstu {instrukcja mycia rąk}, inne szczegóły)
-- 
+Tools used: python 3.11, tensorflow 2.12 used without GPU and tf-keras-vis for prediction visualizations and matplotlib for drawing images.
+### How to set packages?
+`pip install tensorflow numpy matplotlib tf_keras_vis wget` to install packages should be enough.
 
-### Wykorzystanie powyższych narzędzi przez uczniów
-## Podsumowanie warsztatów (1h)
- - Q&A
- - Przegląd memów
+### Generating dataset
+The dataset is taken from [kaggle](kaggle.com/competitions/dogs-vs-cats-redux-kernels-edition) and files are already downloaded and unzipped in `kaggle` folder (this is why this repo is so big).
+To train a network, we need to split those images into two sets - one for training and one for validation. 
+`make_dataset.py` makes this automatically, creating appropriate data structure for tensorflow dataloader. 
+By default, it uses 20% of images as validation set, you can change this in code variable.
+It removes old structure every run and also shuffles structure, so everytime we have different datasets.
+Just run `make_dataset.py` to lift off all this things up, and you are done :rocket:
+
+### Training network
+After running `make_dataset.py` you can run `train.py`, but be careful - close the browser and other big programs as it needs RAM.
+It can run for a long time! (few hours)
+You can tweak up ram usage and training speed by:
+- reducing dataset size (there are 25k images, you can try on lesser set but it will be less accurate)
+- reducing trained images size (they are scaled to 256x256, and this is big. You can control this with `constants.py` consts)
+- reducing number of epochs or validation/training steps
+- stopping logging data for tensorboard during training - remove `tensor_callback` usage in `train.py`
+When you run the script, there will be some warnings and errors about CUDA files, but those aren't important for us as we train on CPU.
+After training, the plot with training accuracy and loss will be shown and the trained model will be saved to file.
+
+There are two files for training - `train` and `train_optimized`.
+The second file was meant to show transfer learning and optimization approaches, but the Inception model used for transfer learning doesn't work with tf-keras-vis visualizations, so the code was abandoned.
+
+#### Checking and debugging model training process
+After training, if you don't disable tensorboard_callback, there should be new data in `logs/fit/` folder. Those are tensorboard metrics, so we can have nice visualisations about training - how the accuracy parameters such as loss and validation accuracy changed.
+To see them after training run in terminal `tensorboard --logdir logs/fit --host 127.0.0.1` and click the link in command output.
+
+### Making predictions
+To get images for predictions, put your images in `kaggle/train` folder and run `predict.py`. 
+Script will show images with predicted labels along with visualizations, press enter in console to go to next image.

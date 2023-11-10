@@ -1,9 +1,14 @@
 import os
 import shutil
 import random
-import utils
+import wget
+import constants
 
-MODEL_TRAIN_DIR = "input_for_model/"
+def copy_images_to_dir(images_to_copy, destination):
+    for image in images_to_copy:
+        shutil.copyfile(f'kaggle/train/{image}', f'{destination}/{image}')
+
+
 def distribute_train_validation_split(validation_size_ratio=0.2):
     print("loading images form kaggle...")
     all_images = os.listdir('kaggle/train/')
@@ -22,28 +27,31 @@ def distribute_train_validation_split(validation_size_ratio=0.2):
     training_cats = all_cats[:index_to_split]
     validation_cats = all_cats[index_to_split:]
 
-    if os.path.exists(MODEL_TRAIN_DIR):
+    if os.path.exists(constants.MODEL_TRAIN_DATA_DIR):
         print("deleting old model input folder")
-        shutil.rmtree(MODEL_TRAIN_DIR)
+        shutil.rmtree(constants.MODEL_TRAIN_DATA_DIR)
     else:
         print("creating model input folder")
-        os.makedirs(MODEL_TRAIN_DIR)
+        os.makedirs(constants.MODEL_TRAIN_DATA_DIR)
 
     print("making dirs for validation and train datasets...")
-    os.makedirs('input_for_model/train/dogs/', exist_ok=True)
-    os.makedirs('input_for_model/train/cats/', exist_ok=True)
-    os.makedirs('input_for_model/validation/dogs/', exist_ok=True)
-    os.makedirs('input_for_model/validation/cats/', exist_ok=True)
+    os.makedirs(f'{constants.MODEL_TRAIN_DATA_DIR}train/dogs/', exist_ok=True)
+    os.makedirs(f'{constants.MODEL_TRAIN_DATA_DIR}train/cats/', exist_ok=True)
+    os.makedirs(f'{constants.MODEL_TRAIN_DATA_DIR}validation/dogs/', exist_ok=True)
+    os.makedirs(f'{constants.MODEL_TRAIN_DATA_DIR}validation/cats/', exist_ok=True)
 
     print("copying and splitting data...")
     print("copying dogs train dataset")
-    utils.copy_images_to_dir(training_dogs, './input_for_model/train/dogs')
+    copy_images_to_dir(training_dogs, f'{constants.MODEL_TRAIN_DATA_DIR}train/dogs')
     print("copying dogs validation dataset")
-    utils.copy_images_to_dir(validation_dogs, './input_for_model/validation/dogs')
+    copy_images_to_dir(validation_dogs, f'{constants.MODEL_TRAIN_DATA_DIR}validation/dogs')
     print("copying cats train dataset")
-    utils.copy_images_to_dir(training_cats, './input_for_model/train/cats')
+    copy_images_to_dir(training_cats, f'{constants.MODEL_TRAIN_DATA_DIR}train/cats')
     print("copying cats validation dataset")
-    utils.copy_images_to_dir(validation_cats, './input_for_model/validation/cats')
+    copy_images_to_dir(validation_cats, f'{constants.MODEL_TRAIN_DATA_DIR}validation/cats')
 
+def download_dataset():
+    wget.download(constants.KAGGLE_DATASET_URL, out=f'{os.getcwd()}\\Data\\cats_and_dogs_filtered.zip')
 
+download_dataset()
 distribute_train_validation_split(0.2)
